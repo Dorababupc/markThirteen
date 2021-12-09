@@ -1,3 +1,7 @@
+var dob=document.querySelector("#date-of-birth");
+var btnclick=document.querySelector("#check-button");
+var message=document.querySelector("#display-error");
+
 function reverseStr(str){
     var listofchar=str.split('');
     var reversechar=listofchar.reverse();
@@ -33,11 +37,7 @@ function allDateFormats(date){
      var yymmdd=dateStr.year.slice[-2]+dateStr.month+dateStr.day;
      return [ddmmyyyy,mmddyyyy,yyyymmdd,ddmmyy,mmddyy,yymmdd];
 }
-var date={
-    day: 9,
-    month:2,
-    year:2001
-}
+
 function checkifany(date){
     var allforms=allDateFormats(date);
     var found=false;
@@ -112,4 +112,29 @@ function nearMiss(date){
     }
     return [nxtDate,ctr];
 }
+function clickHandler(){
+    var bdyStr=dob.value;
+    if(bdyStr!==""){
+      var listofDate=bdyStr.split('-');
+      var date={
+        
+        day: Number(listofDate[2]),
+        month:Number(listofDate[1]),
+        year:Number(listofDate[0])
+    }
+    console.log(date);
+    if(checkifany(date)){
+        message.innerText="Yes your birthday date is a palindrome";
+    }
+    else{
+        var result=nearMiss(date);
+        var text="You miss the palindrome date by "+result[1]+" days";
+        message.innerText=text;
+    }
+  }
+  else{
+      message.innerText="Please enter the date.";
+  }
+}
+btnclick.addEventListener("click",clickHandler);
 
